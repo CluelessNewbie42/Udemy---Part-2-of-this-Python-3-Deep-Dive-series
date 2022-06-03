@@ -72,7 +72,65 @@ print(id(var1), id(var1_deep_copy))'''
 #SLICING
 #this first example is cool!
 
-l = [1, 2, 3, 4, 5, 6, 7]
+'''l = [1, 2, 3, 4, 5, 6, 7]
 s = slice(0, 2)
 
-print(l[s])
+print(l[s])'''
+
+#
+'''
+from functools import lru_cache
+
+@lru_cache(2 * 10)
+def fib(n):
+    if n < 2:
+        return 1
+    else:
+        return fib(n - 1) + fib(n - 2)
+
+class Fib:
+    def __init__(self, n):
+        self.n = n
+
+    def __len__(self):
+        return self.n
+
+    def __getitem__(self, s):
+        if isinstance(s, int):
+            if s < 0 or s >= self.n:
+                raise IndexError
+            else:
+                return Fib._fib(s)
+
+    @staticmethod
+    @lru_cache(2*10)
+    def _fib(n):
+        if n < 2:
+            return 1
+        else:
+            return fib(n-1) + fib(n-2)
+
+f = Fib(100)
+
+print(list(f))'''
+
+
+#In-place concatenation +=
+#When using += to concatenate objects, the location of the new object remains the same as the first object.
+#Example:
+'''l1 = [1, 2, 3]
+l2 = [4, 5, 6]
+print(id(l1))
+print(id(l2))
+
+l1 += l2
+
+print(id(l1))
+
+# However, for regular concatenation, the location of the object will change:
+
+l1 = l1 + l2
+
+print(id(l1))'''
+
+
