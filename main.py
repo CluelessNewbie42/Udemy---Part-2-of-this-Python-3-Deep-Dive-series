@@ -77,7 +77,7 @@ s = slice(0, 2)
 
 print(l[s])'''
 
-#
+# Custom Sequences
 '''
 from functools import lru_cache
 
@@ -134,3 +134,65 @@ l1 = l1 + l2
 print(id(l1))'''
 
 
+# Custom Sequences
+
+import numbers
+class Point:
+    def __init__(self, x, y):
+        if isinstance(x, numbers.Real) and isinstance(y, numbers.Real):
+            self._pt = (x, y)
+        else:
+            raise TypeError('Point must be real numbers')
+
+    def __repr__(self):
+        return f'Point(x={self._pt[0]}, y={self._pt[1]})'
+
+    #the lines below will make Point into a sequence type
+    def __len__(self):
+        return len(self._pt)
+
+    def __getitem__(self, s):
+        return self._pt[s]
+
+
+p1 = Point(10, 2.5)
+
+x, y = p1 #unpacking p1
+
+print(x)
+print(y)
+print(p1)
+
+class Polygon:
+    def __init__(self, *pts):
+        if pts:         #this line means "if pts is not empty"
+            self._pts = [Point(*pt) for pt in pts]
+        else:
+            self._pts = []
+
+    def __repr__(self):
+        pts_str = ', '.join([str(pt) for pt in self._pts])
+        return f'Polygon({pts_str})'
+
+    def __len__(self):
+        return len(self._pts)
+
+    def __getitem__(self, s):
+        return self._pts[s]
+
+    def __add__(self, other):
+        if isinstance(other, Polygon):
+            new_pts = self._pts + other._pts
+            return Polygon(*new_pts)
+        else:
+            raise TypeError('It can only concatenate with another Polygon')
+
+
+p = Polygon((0, 0), Point(1, 1))
+p3 = Polygon((0, 0), (1, 1), (2, 2))
+print(p3)
+
+new_p = Polygon((4, 5), (2, 9))
+new_p2 = Polygon((8, 0), (10, 2))
+
+print('Concatenated Polygon: ', new_p + new_p2)
