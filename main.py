@@ -136,7 +136,7 @@ print(id(l1))'''
 
 # Custom Sequences
 
-import numbers
+'''import numbers
 class Point:
     def __init__(self, x, y):
         if isinstance(x, numbers.Real) and isinstance(y, numbers.Real):
@@ -195,4 +195,30 @@ print(p3)
 new_p = Polygon((4, 5), (2, 9))
 new_p2 = Polygon((8, 0), (10, 2))
 
-print('Concatenated Polygon: ', new_p + new_p2)
+print('Concatenated Polygon: ', new_p + new_p2)'''
+
+# List Comprehension - dis.dis > Disassembly of code
+'''import dis
+
+squares = []
+for i in range(1, 20):
+    squares.append(i**2)
+
+print(squares)
+
+squares2 = compile('[i**2 for i in range(1, 20)]', filename='string', mode='eval')
+print(squares2)
+
+print(dis.dis(squares2))'''
+
+#Project 1
+
+class Polygon:
+    def __init__(self, n, R):
+        self._n = n
+        self._R = R
+
+    def __repr__(self):
+        return f'Polygon(n={self._n}, R={self._R}'
+
+    
