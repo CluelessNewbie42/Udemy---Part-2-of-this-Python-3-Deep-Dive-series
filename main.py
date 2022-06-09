@@ -211,14 +211,18 @@ print(squares2)
 
 print(dis.dis(squares2))'''
 
-#Project 1
 
-class Polygon:
-    def __init__(self, n, R):
-        self._n = n
-        self._R = R
-
-    def __repr__(self):
-        return f'Polygon(n={self._n}, R={self._R}'
-
-    
+import time
+class Timer:
+    def __init__(self):
+        self.elapsed=0
+    def __enter__(self):
+        self.start=time.perf_counter()
+        return self
+    def __exit__(self, exc_type, exc_value, exc_tb):
+        self.stop=time.perf_counter()
+        self.elapsed=self.stop-self.start
+        return False
+with Timer()as timer:
+    time.sleep(1)
+print(timer.elapsed)
